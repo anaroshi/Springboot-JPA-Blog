@@ -3,6 +3,7 @@ package com.cos.blog.test;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
@@ -110,7 +111,7 @@ public class DummyController {
 		
 		if (pagingUsers.isFirst()) {
 			System.out.println(".............. First Page");
-		} else if (pagingUsers.isLast()) {
+		} else if (pagingUsers.isLast()) {																																																																																																																	
 			System.out.println(".............. Last Page");
 		}
 		
@@ -123,7 +124,7 @@ public class DummyController {
 	// id를 전달하여 해당 id에 대한 데이타가 있으면 update를 해주고
 	// id를 전달하여 해당 id에 대한 데이타가 없으면 insert를 한다.
 	// email, password 수정
-	// http://localhost:8070/blog/dummy/user/1
+	// http://loc																																																																																													alhost:8070/blog/dummy/user/1
 	@Transactional // 선언하면 save 함수를 호출하지 않아도 자동으로 save된다.(더티채킹) // 함수 종료시 자동 commit된다.
 	@PutMapping("/dummy/user/{id}")	
 	public User updateUser(@PathVariable int id, @RequestBody User requestUser) {
@@ -143,6 +144,16 @@ public class DummyController {
 		
 		return user;
 	}
-	
-
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																													
+	// 삭제
+	// http://localhost:8070/blog/dummy/user/1
+	@DeleteMapping("/dummy/user/{id}")
+	public String deleteUser(@PathVariable int id) {
+		try {			
+			userRepository.deleteById(id);
+		} catch (EmptyResultDataAccessException e) {
+			return "삭제에 실패하였습니다. 해당 id는 DB에 없습니다.";
+		}		
+		return "삭제되었습니다. id : "+id;
+	}
 }
