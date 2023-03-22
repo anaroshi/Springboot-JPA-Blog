@@ -73,7 +73,7 @@ public class DummyController {
 		}); // 반환값이 User가 아닌 Optional<User>이다.
 */		
 		// 람다식
-		User user = userRepository.findById(id).orElseThrow(()->{ return new IllegalArgumentException("해당 유저는 없습니다. id : "+id); });
+		User user = userRepository.findById(id).orElseThrow(()->{ return new IllegalArgumentException("해당 사용자는 없습니다. id : "+id); });
 		
 		// 요청 : 웹브라우저
 		// user 객체 = 자바 오브젝트
