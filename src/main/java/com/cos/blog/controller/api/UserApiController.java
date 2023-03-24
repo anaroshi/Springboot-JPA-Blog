@@ -22,6 +22,7 @@ public class UserApiController {
 	@Autowired
 	private HttpSession session;
 	
+	// 회원 가입
 	@PostMapping("/api/user")
 	public ResponseDto<Integer> save(@RequestBody User user) {
 		System.out.println("save.. user : "+ user);
@@ -32,7 +33,7 @@ public class UserApiController {
 	}
 	
 	// 전통 로그인 방식
-	@PostMapping("/api/user/login")
+	@PostMapping("/api/login")
 //	public ResponseDto<Integer> login(@RequestBody User user, HttpSession session) { // session 만들기
 	public ResponseDto<Integer> login(@RequestBody User user) { // @Autowired로 session을 상단에 선언해 놓으면 생략가능
 		System.out.println("login.. user : "+user);
@@ -44,5 +45,7 @@ public class UserApiController {
 		}
 		return new ResponseDto<Integer>(HttpStatus.INTERNAL_SERVER_ERROR.value(), -1); // 자바오브젝트를 JSON으로 변환해서 리턴(Jackson)
 	}
+	
+	
 	
 }

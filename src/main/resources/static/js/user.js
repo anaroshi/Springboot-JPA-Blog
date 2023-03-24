@@ -37,14 +37,14 @@ let index = {
 		// ajax 통신을 이용해서 3개의 데이터를 json으로 변경하여 insert 요청		
 		$.ajax({
 			type : "POST", 								// HTTP method type(GET, POST) 형식이다.
-			url : "/blog/api/user", 					// 컨트롤러에서 대기중인 URL 주소
+			url : "/api/user", 					// 컨트롤러에서 대기중인 URL 주소
 			data : JSON.stringify(params), 	// Json 형식의 데이터			
 			contentType : "application/json; charset=utf-8", // body 데이터가 어떤 타입인지(MINE)
 			dataType : "json"
 		}).done(function(resp){
 			//console.log("resp : "+JSON.stringify(resp));
 			alert("회원 가입이 완료되었습니다.");
-			location.href = "/blog";
+			location.href = "/";
 		}).fail(function(error){
 			alert("회원 가입에 실패되었습니다." + JSON.stringify(error));
 		});
@@ -61,7 +61,7 @@ let index = {
 		
 		$.ajax({
 			type : "POST",
-			url : "/blog/api/user/login",
+			url : "/api/login",
 			data : JSON.stringify(params),
 			contentType : "application/json; charset=utf-8",
 			dataType : "json"
@@ -69,7 +69,7 @@ let index = {
 			console.log("resp : "+JSON.stringify(resp));
 			if(resp.data==1) {
 				alert("로그인 되었습니다.");
-				location.href = "/blog";
+				location.href = "/";
 			} else {
 				alert("회원 로그인에 실패되었습니다.");
 			} 	

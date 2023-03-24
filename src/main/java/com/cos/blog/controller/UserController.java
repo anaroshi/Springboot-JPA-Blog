@@ -18,20 +18,20 @@ public class UserController {
 	private UserService userService;
 
 	// 회원가입폼
-	@GetMapping("/user/joinForm")
+	@GetMapping("/joinForm")
 	public String joinForm() {
 		// /WEB-INF/views/joinForm.jsp
 		return "user/joinForm";
 	}
 
 	// 로그인폼
-	@GetMapping("/user/loginForm")
+	@GetMapping("/loginForm")
 	public String login() {
 		// /WEB-INF/views/loginForm.jsp
 		return "user/loginForm";
 	}
 	
-	@PostMapping("/user/userForm")
+	@PostMapping("/userForm")
 	public String save(@RequestBody User user ) {
 		System.out.println("save.. user : "+ user);
 		// DB에서 select를 하고 아래에서 return이 되면 된다.
@@ -41,7 +41,7 @@ public class UserController {
 	}
 
 	// 로그아웃
-	@GetMapping("/user/logout")
+	@GetMapping("/logout")
 	public String logout() {
 		// /WEB-INF/views/logout.jsp
 		return "user/logout";
