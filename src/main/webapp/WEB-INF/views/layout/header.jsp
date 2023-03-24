@@ -28,7 +28,7 @@
 		<c:choose>
 			<c:when test="${empty principal}">
 			      <li class="nav-item"><a class="nav-link" href="/loginForm">로그인</a></li>
-			      <li class="nav-item"><a class="nav-link" href="/joinForm">회원가입</a></li>
+			      <li class="nav-item"><a class="nav-link" href="/auth/joinForm">회원가입</a></li>
 			</c:when>
 			<c:otherwise>
 			      <li class="nav-item"><a class="nav-link" href="/board/form">글쓰기</a></li>

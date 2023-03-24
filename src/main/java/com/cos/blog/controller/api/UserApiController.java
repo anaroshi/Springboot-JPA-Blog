@@ -11,7 +11,7 @@ import com.cos.blog.model.RoleType;
 import com.cos.blog.model.User;
 import com.cos.blog.service.UserService;
 
-import jakarta.servlet.http.HttpSession;
+//인증이 안된 사용자들이 출입할 수 있는 경로는 /auth/** 허용  ==> 인증이 필요없는 곳에 /auth/ 경로를 붙힘 
 
 @RestController
 public class UserApiController {
@@ -20,7 +20,7 @@ public class UserApiController {
 	private UserService userService;
 	
 	// 회원 가입
-	@PostMapping("/api/user")
+	@PostMapping("/auth/joinProc")
 	public ResponseDto<Integer> save(@RequestBody User user) {
 		System.out.println("save.. user : "+ user);
 		// 실제로 DB에 insert를 하고 아래에서 return이 되면 된다.
@@ -45,7 +45,7 @@ public class UserApiController {
 	}
 	*/
 	
-	// Security 로그인
+	// Security 로그인은 필요없음
 	
 	
 }
