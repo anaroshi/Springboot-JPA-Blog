@@ -12,7 +12,7 @@ import com.cos.blog.dto.ResponseDto;
 public class GlobalException {
 	
 	//@ExceptionHandler(value = IllegalArgumentException.class)
-	@ExceptionHandler({Exception.class})
+	@ExceptionHandler(value =Exception.class)
 	public  ResponseDto<String> handleArgumentException(IllegalArgumentException e) {
 		return new ResponseDto<String>(HttpStatus.INTERNAL_SERVER_ERROR.value(), e.getMessage());
 	}

@@ -10,11 +10,16 @@ let index = {
 //		$("#btn-save").on("click", function(){
 //			_this.save();
 //		});
-		
+
+		// 회원가입
 		$("#btn-save").on("click", ()=>{
 			this.save();
 		});
 		
+		// 로그인
+		$("#btn-login").on("click",()=>{
+			this.login();
+		});
 		
 	},
 	
@@ -43,7 +48,36 @@ let index = {
 		}).fail(function(error){
 			alert("회원 가입에 실패되었습니다." + JSON.stringify(error));
 		});
-	}
+	},
+	
+	login : function() {
+		// 로그인 처리
+		
+		let params = {
+			username : $("#username").val(),
+			password : $("#password").val() 
+		};
+		console.log("params : "+JSON.stringify(params));
+		
+		$.ajax({
+			type : "POST",
+			url : "/blog/api/user/login",
+			data : JSON.stringify(params),
+			contentType : "application/json; charset=utf-8",
+			dataType : "json"
+		}).done(function(resp){
+			console.log("resp : "+JSON.stringify(resp));
+			if(resp.data==1) {
+				alert("로그인 되었습니다.");
+				location.href = "/blog";
+			} else {
+				alert("회원 로그인에 실패되었습니다.");
+			} 	
+		})	.fail(function(error){
+			alert("회원 로그인에 실패되었습니다." + JSON.stringify(error));
+		});
+		
+	} 
 }
 
 index.init();
