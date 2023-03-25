@@ -3,7 +3,6 @@ package com.cos.blog.model;
 import java.sql.Timestamp;
 import java.util.List;
 
-import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 
 import jakarta.persistence.Column;
@@ -41,7 +40,7 @@ public class Board {
 	@Lob // 대용량 데이터
 	private String content; // 섬머노트 라이브러리 <html>태그가 섞여서 디자인 됨.
 	
-	@ColumnDefault("0")
+//	@ColumnDefault("0")
 	private int count; // 조회수
 	
 	// (fetch = FetchType.EAGER) 게시글 한건에 하나의 user가 오므로 셀렉트할때 무조건 user의 정보를 가져온다.
