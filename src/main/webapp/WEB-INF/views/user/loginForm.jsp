@@ -3,7 +3,7 @@
 
 <div class="container">
 
-	<form action="/login" method="post">
+	<form action="/auth/loginProc" method="post">
 		<div class="form-group">
 			<label for="username">Username</label>
 			<input type="text" class="form-control" placeholder="Enter Username" id="username" name="username">
@@ -17,10 +17,8 @@
 			<input class="form-check-input" type="checkbox" name="remember">Remember me</label>
 		</div>
 		<button id="btn-login" class="btn btn-primary">로그인</button>
-	</form>
-	
+	</form>	
 
 </div>
 
-<!-- <script src="/js/user.js"></script> -->
 <%@ include file="../layout/footer.jsp"%>
