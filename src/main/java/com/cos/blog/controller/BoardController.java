@@ -7,6 +7,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import com.cos.blog.service.BoardService;
 
@@ -27,10 +28,16 @@ public class BoardController {
 		return "index"; // viewResolve
 	}
 
+	@GetMapping("/board/{id}")
+	public String findById(@PathVariable int id, Model model) {
+		model.addAttribute("board", boardService.view(id));
+		return "board/detail";
+	}
+	
+	// 게시판 글쓰기 폼
 	// user 권한이 필요
 	@GetMapping("/board/saveForm")
-	public String saveForm() {
-		
+	public String saveForm() {		
 		return "board/saveForm";
 	}
 }
