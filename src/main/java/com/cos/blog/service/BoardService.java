@@ -1,8 +1,8 @@
 package com.cos.blog.service;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,9 +27,9 @@ public class BoardService {
 		boardRepository.save(board);
 	}
 	
-	public List<Board> list() {
+	public Page<Board> list(Pageable pageable) {
 		System.out.println("boardService .... list");
-		return boardRepository.findAll();
+		return boardRepository.findAll(pageable);
 	}
 	
 }

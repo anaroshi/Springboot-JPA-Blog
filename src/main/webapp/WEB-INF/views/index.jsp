@@ -4,7 +4,7 @@
 
 <div class="container">
 
-<c:forEach items="${boards}" var="board">
+<c:forEach items="${boards.content}" var="board">
 	<div class="card m-2">	 
 	  <div class="card-body">
 	  
@@ -13,7 +13,29 @@
 	  </div>
 	</div>
 </c:forEach>
-	
+
+<ul class="pagination justify-content-center">
+	<c:choose>
+		<c:when test="${boards.first }">
+			<li class="page-item disabled"><a class="page-link" href="?page=${boards.number-1}">Previous</a></li>
+		</c:when>
+		<c:otherwise>
+			<li class="page-item"><a class="page-link" href="?page=${boards.number-1}">Previous</a></li>
+		</c:otherwise>
+	</c:choose>
+	<c:forEach var="i" begin="0" end="${boards.totalPages-1 }">		
+			<li class="page-item <c:if test="${boards.number == i}">active</c:if>"><a class="page-link" href="?page=${i}">${i+1}</a></li>
+	</c:forEach>
+	<c:choose>
+		<c:when test="${boards.last }">
+			<li class="page-item disabled"><a class="page-link" href="?page=${boards.number+1}">Next</a></li>
+		</c:when>
+		<c:otherwise>
+			<li class="page-item"><a class="page-link" href="?page=${boards.number+1}">Next</a></li>
+		</c:otherwise>
+  	</c:choose>
+</ul>	
+
 </div>
 
 <%@ include file="layout/footer.jsp" %>
