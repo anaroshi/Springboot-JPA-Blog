@@ -11,7 +11,16 @@ let index = {
 		$("#btn-save").on("click", ()=>{
 			this.save();
 		});
-		
+
+		// 게시판 글삭제
+		$("#btn-delete").on("click", ()=>{
+			this.deleteById(); // delete는 예약어이므로
+		});
+
+		// 게시판 글수정
+		$("#btn-update").on("click", ()=>{
+			this.update();
+		});
 
 	},
 	
@@ -39,9 +48,30 @@ let index = {
 		}).fail(function(error){
 			alert("글쓰기에 실패되었습니다." + JSON.stringify(error));
 		});
-	}
+	},
 	
+	deleteById: function() {
+		// 글삭제 수행 요청
+		var id = $("#id").text();
+		if(!confirm("삭제하시겠습니까?")) return;
+		// alert("delete id : "+ id);	
 
+		$.ajax({
+			type: "DELETE",
+			url: "/api/board/"+id,
+			dataType: "json"			
+		}).done(function(resp){
+			alert("삭제가 완료되었습니다.");
+			location.href = "/";
+		}).fail(function(error){
+			alert("삭제에 실패되었습니다." + JSON.stringify(error));
+		});
+	},
+	
+	update: function() {
+		// 글수정 수행 요청
+		alert("update");	
+	}
 }
 
 index.init();
