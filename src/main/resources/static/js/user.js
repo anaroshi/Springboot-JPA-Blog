@@ -16,6 +16,10 @@ let index = {
 			this.save();
 		});
 		
+		// 회원 정보 수정
+		$("#btn-update").on("click",()=>{
+			this.update();
+		})		
 
 	},
 	
@@ -44,8 +48,31 @@ let index = {
 		}).fail(function(error){
 			alert("회원 가입에 실패되었습니다." + JSON.stringify(error));
 		});
-	}
+	},
 	
+	update: function() {
+		// 회원정보 수정 수행 요청		
+		// alert("회원정보 수정 수행 요청");
+		let params = {
+			id: $("#id").val(),
+			password : $("#password").val(),
+			email : $("#email").val()
+		}
+		console.log("params : "+JSON.stringify(params));
+		
+		$.ajax({
+			type : "PUT",
+			url : "/user",
+			data : JSON.stringify(params),			
+			contentType : "application/json; charset=utf-8",
+			dataType : "json"
+		}).done(function(resp){
+			alert("회원 정보 수정이 완료되었습니다.");
+			location.href = "/";
+		}).fail(function(error){
+			alert("회원 정보 수정에 실패되었습니다." + JSON.stringify(error));
+		});
+	}	
 
 }
 

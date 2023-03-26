@@ -3,6 +3,7 @@ package com.cos.blog.controller.api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -27,6 +28,14 @@ public class UserApiController {
 		return new ResponseDto<Integer>(HttpStatus.OK.value(), 1); // 자바오브젝트를 JSON으로 변환해서 리턴(Jackson)
 	}
 
+	// 회원정보 수정
+	@PutMapping("/user")
+	public ResponseDto<Integer> update(@RequestBody User user) {
+		System.out.println("User update .. user : "+ user);
+		userService.update(user);
+		return new ResponseDto<Integer>(HttpStatus.OK.value(), 1); // 자바오브젝트를 JSON으로 변환해서 리턴(Jackson)
+	}
+	
 	/*
 	// 전통 로그인 방식
 	@PostMapping("/api/login")
@@ -43,7 +52,6 @@ public class UserApiController {
 	}
 	*/
 	
-	// Security 로그인은 필요없음
-	
+	// Security 로그인은 필요없음	
 	
 }

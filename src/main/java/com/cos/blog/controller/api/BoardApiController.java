@@ -50,9 +50,7 @@ public class BoardApiController {
 		boardService.updateById(id, board);		
 		return new ResponseDto<Integer>(HttpStatus.OK.value(), 1);
 	}
-	
-
-	
+		
 	/*
 	// 전통 로그인 방식
 	@PostMapping("/api/login")
@@ -69,7 +67,6 @@ public class BoardApiController {
 	}
 	*/
 	
-	// Security 로그인은 필요없음
-	
+	// Security 로그인은 필요없음	
 	
 }

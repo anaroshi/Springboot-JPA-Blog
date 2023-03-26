@@ -36,18 +36,25 @@ public class UserService {
 		userRepository.save(user);
 	}
 	
-//	// 로그인 - 전통 로그인 방식
+	// 회원 정보 수정
+	@Transactional
+	public void update(User requestUser) {
+		// 수정시에는 영속성 컨텍스트 User 오브젝트를 영속화 시키고, 영속화 된 User 오브젝트를 수정
+		// select를 해서 User 오브젝트를 DB로 가져오는 이유는 영속화를 하기 위해서!!
+		// 영속화된 오브젝트를 변경하면 자동으로 더티체킹이 일어나면서 DB에 update문을 날려준다. db flush 따로 저장명령어를 넣어줄 필요가 없다. 
+		// 람다식
+		User user = userRepository.findById(requestUser.getId()).orElseThrow(()->{ return new IllegalArgumentException("해당 사용자는 없습니다. id : "+requestUser.getId()); });
+		String rawPassword = requestUser.getPassword();
+		user.setPassword(encoder.encode(rawPassword)); // 해쉬코드로 암호화한다.
+		user.setEmail(requestUser.getEmail());
+		// 회원 수정 함수 종료시 = 서비스 종료 = 트랜잭션 종료 = commit이 자동으로 된다.
+		// 영속화된 user 객체의 변화가 감지되면 더티체킹이 되어 update문을 날려준다.
+	}
+	
+	// 로그인 - 전통 로그인 방식
 //	@Transactional(readOnly = true) // Select 할 때 트랜잭션을 시작, 서비스 종료시에 트랜잭션 종료(정합성 유지)
 //	public User login(User user) {
 //		return userRepository.findByUsernameAndPassword(user.getUsername(), user.getPassword());
 //	}
-	
-	// 회원조회 by id
-	@Transactional(readOnly = true)
-	public User userInfo(User user) {
-		// 람다식
-		User userInfo = userRepository.findById(user.getId()).orElseThrow(()->{ return new IllegalArgumentException("해당 사용자는 없습니다. id : "+user.getId()); });
-		return userInfo;
-	}
 	
 }

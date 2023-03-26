@@ -9,7 +9,11 @@
 	  <div class="card-body">
 	  
 	    <h4 class="card-title">${board.title}</h4>
-	    <a href="/board/${board.id}" class="btn btn-primary">상세보기</a>
+	    <div class="d-flex">
+	    	<a href="/board/${board.id}" class="btn btn-primary">상세보기</a>
+	    	<h5 class="card-title ml-auto">${board.user.username}</h5>
+		</div>
+ 
 	  </div>
 	</div>
 </c:forEach>
