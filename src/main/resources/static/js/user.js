@@ -55,6 +55,7 @@ let index = {
 		// alert("회원정보 수정 수행 요청");
 		let params = {
 			id: $("#id").val(),
+			username: $("#username").val(),
 			password : $("#password").val(),
 			email : $("#email").val()
 		}
