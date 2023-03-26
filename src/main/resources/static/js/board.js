@@ -52,7 +52,7 @@ let index = {
 	
 	deleteById: function() {
 		// 글삭제 수행 요청
-		var id = $("#id").text();
+		let id = $("#id").text();
 		if(!confirm("삭제하시겠습니까?")) return;
 		// alert("delete id : "+ id);	
 
@@ -70,7 +70,24 @@ let index = {
 	
 	update: function() {
 		// 글수정 수행 요청
-		alert("update");	
+		let id = $("#id").val();
+		let params = {
+			title: $("#title").val(),
+			content: $("#content").val()
+		}
+		console.log("params : "+JSON.stringify(params));
+		$.ajax({
+			type: "PUT",
+			url:  "/api/board/"+id,
+			data: JSON.stringify(params),
+			contentType: "application/json; charset=utf-8",
+			dataType: "json"
+		}).done(function(resp){
+			alert("수정이 완료되었습니다.");
+			location.href="/";
+		}).fail(function(error){			
+			alert("수정에 실패되었습니다." + JSON.stringify(error));
+		})	;
 	}
 }
 

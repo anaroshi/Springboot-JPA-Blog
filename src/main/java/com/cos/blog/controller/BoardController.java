@@ -40,4 +40,11 @@ public class BoardController {
 	public String saveForm() {		
 		return "board/saveForm";
 	}
+	
+	// 게시판 글수정 폼
+	@GetMapping("/board/{id}/updateForm")
+	public String updateForm(@PathVariable int id, Model model) {
+		model.addAttribute("board", boardService.view(id));
+		return "board/updateForm";
+	}
 }

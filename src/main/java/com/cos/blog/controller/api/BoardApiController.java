@@ -6,6 +6,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -40,7 +41,18 @@ public class BoardApiController {
 		boardService.deleteById(id);		
 		return new ResponseDto<Integer>(HttpStatus.OK.value(), 1); // 자바오브젝트를 JSON으로 변환해서 리턴(Jackson)
 	}
+	
+	//  게시판 글 수정
+	@PutMapping("/api/board/{id}")
+	public ResponseDto<Integer> update(@PathVariable int id, @RequestBody Board board) {
+		System.out.println("update.. id : "+ id);
+		System.out.println("update.. board : "+ board);
+		boardService.updateById(id, board);		
+		return new ResponseDto<Integer>(HttpStatus.OK.value(), 1);
+	}
+	
 
+	
 	/*
 	// 전통 로그인 방식
 	@PostMapping("/api/login")

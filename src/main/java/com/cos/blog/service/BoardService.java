@@ -5,6 +5,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.PutMapping;
 
 import com.cos.blog.model.Board;
 import com.cos.blog.model.User;
@@ -47,6 +48,19 @@ public class BoardService {
 	public void deleteById(int id) {
 		System.out.println("boardService .... deleteById : "+id);
 		boardRepository.deleteById(id);
+	}
+	
+	// 게시판 글수정
+	@Transactional
+	public void updateById(int id, Board requestBoard) {
+		System.out.println("boardService .... updateById : "+id);
+		Board board = boardRepository.findById(id).orElseThrow(()->{
+			return new IllegalArgumentException("글 찾기 실패 - id : "+id+"를 찾을수 없습니다.");
+		}); // 영속화
+		board.setTitle(requestBoard.getTitle());
+		board.setContent(requestBoard.getContent());
+		// 해당 함수로 종료시(Service가 종료될 때)에 트랜잭션이 종료됩니다. 이때 더티체킹이 일어나면서 자동 업데이트가 됨. db flush 따로 저장명령어를 넣어줄 필요가 없다. 
+		// @PutMapping
 	}
 	
 }
