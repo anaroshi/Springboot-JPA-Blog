@@ -96,8 +96,9 @@ let index = {
 	
 	replySave: function() {
 		// 댓글 쓰기 수행 요청
-		let boardId = $("#boardId").val();
 		let params = {
+			userId: $("#userId").val(),
+			boardId: $("#boardId").val(),
 			content:$("#reply-content").val()
 		};		
 		console.log("params : "+JSON.stringify(params));
@@ -106,19 +107,19 @@ let index = {
 		// ajax 호출시 default가 비동기 호출
 		$.ajax({
 			type : "POST", 											// HTTP method type(GET, POST) 형식이다.
-			url : '/api/board/'+boardId+'/reply', 		// 컨트롤러에서 대기중인 URL 주소
+			url : '/api/board/'+params.boardId+'/reply', 		// 컨트롤러에서 대기중인 URL 주소
 			data : JSON.stringify(params), 				// Json 형식의 데이터			
 			contentType : "application/json; charset=utf-8", // body 데이터가 어떤 타입인지(MINE)
 			dataType : "json"
 		}).done(function(resp){
 			//console.log("resp : "+JSON.stringify(resp));
 			alert("댓글쓰기가 완료되었습니다.");
-			location.href = `/board/${boardId}`;
+			location.href = `/board/${params.boardId}`;
 		}).fail(function(error){
 			alert("댓글쓰기에 실패되었습니다." + JSON.stringify(error));
 		});
 	}
-	
+
 }
 
 index.init();

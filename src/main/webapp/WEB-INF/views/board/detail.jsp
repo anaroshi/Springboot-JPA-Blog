@@ -26,6 +26,7 @@
 	<!-- 댓글 -->	
 	<div class="card">
 		<form>
+			<input type="hidden" id="userId" value="${board.user.id}">
 			<input type="hidden" id="boardId" value="${board.id}">
 			<div class="card-body">
 				<textarea class="form-control" rows="1" id="reply-content"></textarea>
@@ -40,11 +41,13 @@
 		<div class="card-header">댓글리스트</div>
 		<ul class="list-group" id="reply--box">
 			<c:forEach var="reply" items="${board.replys}">
-				<li class="list-group-item d-flex justify-content-between" id="reply--1">
+				<li class="list-group-item d-flex justify-content-between" id='reply--${reply.id}'>
 					<div>${reply.content}</div>
 					<div class="d-flex">
 						<div class="font-italic">작성자 : ${reply.user.username} &nbsp;</div>
-						<button class="badge"  id="btn-reply-delete" type="button">삭제</button>
+						<c:if test="${reply.user.id==principal.user.id }">
+							<button class="badge"  id="btn-reply-delete" type="button">삭제</button>
+						</c:if>
 					</div>				
 				</li>
 			</c:forEach>
