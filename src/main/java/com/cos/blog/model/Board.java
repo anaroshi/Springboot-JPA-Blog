@@ -4,7 +4,6 @@ import java.sql.Timestamp;
 import java.util.List;
 
 import org.hibernate.annotations.CreationTimestamp;
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.Column;
@@ -17,6 +16,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OrderBy;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -56,6 +56,7 @@ public class Board {
 	// (fetch = FetchType.EAGER) 게시글 한건에 여러개의 reply가 오는데 셀렉트할때 다 가져오게 한다.(FetchType.EAGER)
 	@OneToMany(mappedBy = "board", fetch = FetchType.EAGER) // 여러의 답변글이 한개의 게시글에 달릴 수 있다.
 	@JsonIgnoreProperties({"board"}) // 무한 참조를 방지하기 위함(Reply model에서 board 정보를 가져오기때문)
+	@OrderBy("id desc") // 정렬
 	private List<Reply> replys;
 	
 	@CreationTimestamp

@@ -7,8 +7,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.cos.blog.model.Board;
+import com.cos.blog.model.Reply;
 import com.cos.blog.model.User;
 import com.cos.blog.repository.BoardRepository;
+import com.cos.blog.repository.ReplyRepository;
 
 // 스프링이 컴포넌트 스캔을 통해서 Bean에 등록을 해줌. IoC를 해준다.
 @Service
@@ -16,6 +18,9 @@ public class BoardService {
 	
 	@Autowired
 	private BoardRepository boardRepository;
+
+	@Autowired
+	private ReplyRepository replyRepository;
 	
 	// 게시판 글쓰기
 	@Transactional  // import org.springframework.transaction.annotation.Transactional;
@@ -60,6 +65,22 @@ public class BoardService {
 		board.setContent(requestBoard.getContent());
 		// 해당 함수로 종료시(Service가 종료될 때)에 트랜잭션이 종료됩니다. 이때 더티체킹이 일어나면서 자동 업데이트가 됨. db flush 따로 저장명령어를 넣어줄 필요가 없다. 
 		// @PutMapping
+	}
+	
+	// 게시판 댓글 등록
+	@Transactional
+	public void replySave(User user, int boardId, Reply requestReply) {
+		System.out.println(" ---------------- boardService ----------------");
+		System.out.println("boardService .... replySave.. user : "+user);
+		System.out.println("boardService .... replySave.. boardId : "+ boardId);
+		System.out.println("boardService .... replySave.. requestReply : "+ requestReply);
+		
+		Board board = boardRepository.findById(boardId).orElseThrow(()->{
+			return new IllegalArgumentException("댓글 쓰기 실패 - 게시글 id : "+boardId+"를 찾을수 없습니다.");
+		});		
+		requestReply.setUser(user);
+		requestReply.setBoard(board);
+		replyRepository.save(requestReply);		
 	}
 	
 }

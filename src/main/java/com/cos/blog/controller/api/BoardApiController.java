@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.cos.blog.config.auth.PrincipalDetail;
 import com.cos.blog.dto.ResponseDto;
 import com.cos.blog.model.Board;
+import com.cos.blog.model.Reply;
 import com.cos.blog.service.BoardService;
 
 //인증이 안된 사용자들이 출입할 수 있는 경로는 /auth/** 허용  ==> 인증이 필요없는 곳에 /auth/ 경로를 붙힘 
@@ -50,7 +51,18 @@ public class BoardApiController {
 		boardService.updateById(id, board);		
 		return new ResponseDto<Integer>(HttpStatus.OK.value(), 1);
 	}
-		
+	
+	// 게시판 댓글 등록	
+	@PostMapping("/api/board/{boardId}/reply")
+	public ResponseDto<Integer> replySave(@PathVariable int boardId, @RequestBody Reply reply, @AuthenticationPrincipal PrincipalDetail principal) {
+		System.out.println("replySave.. boardId : "+ boardId);
+		System.out.println("replySave.. Reply : "+reply);
+		System.out.println("replySave.. User : "+ principal.getUser());
+
+		boardService.replySave(principal.getUser(), boardId, reply);
+		return new ResponseDto<Integer>(HttpStatus.OK.value(), 1);
+	}
+	
 	/*
 	// 전통 로그인 방식
 	@PostMapping("/api/login")

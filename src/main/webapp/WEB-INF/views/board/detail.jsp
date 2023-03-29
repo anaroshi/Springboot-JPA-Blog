@@ -6,7 +6,7 @@
 	<button class="btn btn-secondary" onclick="history.back()">돌아가기</button>
 	<c:if test="${board.user.id==principal.user.id}">
 		<a href="/board/${board.id}/updateForm" class="btn btn-warning">수정</a>
-		<button id="btn-delete" class="btn btn-danger">삭제</button>
+		<button id="btn-delete" class="btn btn-danger" type="button">삭제</button>
 	</c:if>
 	<br><br>
 	<div>
@@ -25,8 +25,15 @@
 	
 	<!-- 댓글 -->	
 	<div class="card">
-		<div class="card-body"><textarea class="form-control" rows="1" cols=""></textarea></div>
-		<div class="card-footer"><button class="btn btn-primary">등록</button> </div>
+		<form>
+			<input type="hidden" id="boardId" value="${board.id}">
+			<div class="card-body">
+				<textarea class="form-control" rows="1" id="reply-content"></textarea>
+			</div>
+			<div class="card-footer" >
+				<button class="btn btn-primary"  id="btn-reply-save" type="button">등록</button>
+			</div>
+		</form>
 	</div>
 
 	<div class="card">
@@ -37,7 +44,7 @@
 					<div>${reply.content}</div>
 					<div class="d-flex">
 						<div class="font-italic">작성자 : ${reply.user.username} &nbsp;</div>
-						<button class="badge"  id="btn-reply" >삭제</button>
+						<button class="badge"  id="btn-reply-delete" type="button">삭제</button>
 					</div>				
 				</li>
 			</c:forEach>
