@@ -21,7 +21,27 @@
 	<div class="form-group">
 		<div>${board.content}</div>
 	</div>
-	<hr>	
+	<hr>
+	
+	<!-- 댓글 -->	
+	<div class="card">
+		<div class="card-body"><textarea class="form-control" rows="1" cols=""></textarea></div>
+		<div class="card-footer"><button class="btn btn-primary">등록</button> </div>
+	</div>
+	
+	<div class="card">
+		<div class="card-header">댓글리스트</div>
+		<ul class="list-group" id="comment--box">
+			<li class="list-group-item d-flex justify-content-between" id="comment--1">
+				<div>댓글 내용입니다!!</div>
+				<div class="d-flex">
+					<div class="font-italic">작성자 : sundor &nbsp;</div>
+					<button class="badge"  id="btn-reply" >삭제</button>
+				</div>
+				
+			</li>
+		</ul>
+	</div>
 	
 </div>
 
