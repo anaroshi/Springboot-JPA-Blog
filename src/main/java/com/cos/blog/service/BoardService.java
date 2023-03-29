@@ -8,11 +8,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.cos.blog.dto.ReplySaveRequestDto;
 import com.cos.blog.model.Board;
-import com.cos.blog.model.Reply;
 import com.cos.blog.model.User;
 import com.cos.blog.repository.BoardRepository;
 import com.cos.blog.repository.ReplyRepository;
-import com.cos.blog.repository.UserRepository;
 
 // 스프링이 컴포넌트 스캔을 통해서 Bean에 등록을 해줌. IoC를 해준다.
 @Service
@@ -23,9 +21,6 @@ public class BoardService {
 
 	@Autowired
 	private ReplyRepository replyRepository;
-	
-	@Autowired
-	private UserRepository userRepository;
 	
 	// 게시판 글쓰기
 	@Transactional  // import org.springframework.transaction.annotation.Transactional;
@@ -89,30 +84,38 @@ public class BoardService {
 //	}
 	
 	// 게시판 댓글 등록 - ReplySaveRequestDto 이용
+//	@Transactional
+//	public void replySave(ReplySaveRequestDto replySaveRequestDto) {
+//		System.out.println(" ---------------- boardService ----------------");
+//		System.out.println("boardService .... replySave.. reply : "+replySaveRequestDto);
+//		
+//		User user = userRepository.findById(replySaveRequestDto.getUserId()).orElseThrow(()->{
+//			return new IllegalArgumentException("댓글 쓰기 실패 - User id : "+replySaveRequestDto.getUserId()+"를 찾을수 없습니다.");
+//		}); // 영속화 완료
+//		
+//		Board board = boardRepository.findById(replySaveRequestDto.getBoardId()).orElseThrow(()->{
+//			return new IllegalArgumentException("댓글 쓰기 실패 - 게시글 id : "+replySaveRequestDto.getBoardId()+"를 찾을수 없습니다.");
+//		}); // 영속화 완료
+//		
+////		Reply reply = Reply.builder()
+////				.user(user)
+////				.board(board)
+////				.content(replySaveRequestDto.getContent())
+////				.build();
+//		
+//		// reply model에 update 메소드를 생성 후 
+//		Reply reply = new Reply();
+//		reply.update(user, board, replySaveRequestDto.getContent());
+//
+//		replyRepository.save(reply);
+//	}
+	
+	// 게시판 댓글 등록 - ReplySaveRequestDto, ReplyRepository 이용
 	@Transactional
 	public void replySave(ReplySaveRequestDto replySaveRequestDto) {
-		System.out.println(" ---------------- boardService ----------------");
 		System.out.println("boardService .... replySave.. reply : "+replySaveRequestDto);
-		
-		User user = userRepository.findById(replySaveRequestDto.getUserId()).orElseThrow(()->{
-			return new IllegalArgumentException("댓글 쓰기 실패 - User id : "+replySaveRequestDto.getUserId()+"를 찾을수 없습니다.");
-		}); // 영속화 완료
-		
-		Board board = boardRepository.findById(replySaveRequestDto.getBoardId()).orElseThrow(()->{
-			return new IllegalArgumentException("댓글 쓰기 실패 - 게시글 id : "+replySaveRequestDto.getBoardId()+"를 찾을수 없습니다.");
-		}); // 영속화 완료
-		
-//		Reply reply = Reply.builder()
-//				.user(user)
-//				.board(board)
-//				.content(replySaveRequestDto.getContent())
-//				.build();
-		
-		// reply model에 update 메소드를 생성 후 
-		Reply reply = new Reply();
-		reply.update(user, board, replySaveRequestDto.getContent());
-
-		replyRepository.save(reply);
+		int result = replyRepository.customSave(replySaveRequestDto.getUserId(), replySaveRequestDto.getBoardId(), replySaveRequestDto.getContent());
+		System.out.println("result : "+result);
 	}
 	
 }

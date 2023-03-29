@@ -1,7 +1,5 @@
 package com.cos.blog.dto;
 
-import com.cos.blog.model.Reply;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

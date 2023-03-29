@@ -15,6 +15,7 @@ import lombok.Setter;
 // 스프링 시큐리티의 고유한 세션 저장소에 저장을 해준다.
 @Getter
 @Setter
+@SuppressWarnings("serial")  // The serializable class OboeObject does not declare a static final serialVersionUID field of type long 경고 제거 ( implements UserDetails 상속때문)
 public class PrincipalDetail implements UserDetails {
 	
 	private User user; // 콤포지션(객체를 품고 있는걸 콤포지션이라 한다.)
