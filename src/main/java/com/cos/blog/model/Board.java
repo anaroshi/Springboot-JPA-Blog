@@ -5,6 +5,8 @@ import java.util.List;
 
 import org.hibernate.annotations.CreationTimestamp;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -52,8 +54,9 @@ public class Board {
 	// mappedBy = "board" 의 board명은 Reply.java의 private Board board; 명이다.
 	// (fetch = FetchType.LAZY) 게시글 한건에 여러개의 reply가 오므로 셀렉트할때 필요할때 가져오게 한다.(FetchType.LAZY)
 	// (fetch = FetchType.EAGER) 게시글 한건에 여러개의 reply가 오는데 셀렉트할때 다 가져오게 한다.(FetchType.EAGER)
-	@OneToMany(mappedBy = "board", fetch = FetchType.EAGER) // 여러의 답변글이 한개의 게시글에 달릴 수 있다.	
-	private List<Reply> reply;
+	@OneToMany(mappedBy = "board", fetch = FetchType.EAGER) // 여러의 답변글이 한개의 게시글에 달릴 수 있다.
+	@JsonIgnoreProperties({"board"}) // 무한 참조를 방지하기 위함(Reply model에서 board 정보를 가져오기때문)
+	private List<Reply> replys;
 	
 	@CreationTimestamp
 	private Timestamp createDate;
