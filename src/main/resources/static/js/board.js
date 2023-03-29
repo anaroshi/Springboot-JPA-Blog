@@ -102,12 +102,11 @@ let index = {
 			content:$("#reply-content").val()
 		};		
 		console.log("params : "+JSON.stringify(params));
-		console.log('boardId : '+boardId);
 		
 		// ajax 호출시 default가 비동기 호출
 		$.ajax({
 			type : "POST", 											// HTTP method type(GET, POST) 형식이다.
-			url : '/api/board/'+params.boardId+'/reply', 		// 컨트롤러에서 대기중인 URL 주소
+			url : `/api/board/${params.boardId}/reply`, 		// 컨트롤러에서 대기중인 URL 주소
 			data : JSON.stringify(params), 				// Json 형식의 데이터			
 			contentType : "application/json; charset=utf-8", // body 데이터가 어떤 타입인지(MINE)
 			dataType : "json"
@@ -118,8 +117,25 @@ let index = {
 		}).fail(function(error){
 			alert("댓글쓰기에 실패되었습니다." + JSON.stringify(error));
 		});
-	}
+	},	
 
+	replyDelete: function(boardId, replyId) {
+		// 댓글 삭제 수행 요청
+		if(!confirm("삭제하시겠습니까?")) return;
+		// alert("replyDelete boardId : "+ boardId+", replyId : "+ replyId);	
+
+		$.ajax({
+			type: "DELETE",
+			url: `/api/board/${boardId}/reply/${replyId}`,
+			dataType: "json"			
+		}).done(function(resp){
+			alert("댓글 삭제가 완료되었습니다.");
+			location.href = `/board/${boardId}`;
+		}).fail(function(error){
+			alert("댓글 삭제에 실패되었습니다." + JSON.stringify(error));
+		});
+	}
+		
 }
 
 index.init();

@@ -14,7 +14,11 @@ import com.cos.blog.repository.ReplyRepository;
 
 // 스프링이 컴포넌트 스캔을 통해서 Bean에 등록을 해줌. IoC를 해준다.
 @Service
+// @RequiredArgsConstructor
 public class BoardService {
+	
+//	private final BoardRepository boardRepository;
+//	private final ReplyRepository replyRepository;
 	
 	@Autowired
 	private BoardRepository boardRepository;
@@ -116,6 +120,13 @@ public class BoardService {
 		System.out.println("boardService .... replySave.. reply : "+replySaveRequestDto);
 		int result = replyRepository.customSave(replySaveRequestDto.getUserId(), replySaveRequestDto.getBoardId(), replySaveRequestDto.getContent());
 		System.out.println("result : "+result);
+	}
+	
+	// 게시판 댓글 삭제 
+	@Transactional
+	public void replyDelete(int replyId) {
+		System.out.println("boardService .... replyDelete.. replyId : "+replyId);
+		replyRepository.deleteById(replyId);
 	}
 	
 }

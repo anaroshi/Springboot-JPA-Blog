@@ -72,6 +72,14 @@ public class BoardApiController {
 		return new ResponseDto<Integer>(HttpStatus.OK.value(), 1);
 	}
 	
+	// 게시판 댓글 삭제
+	@DeleteMapping("/api/board/{boardId}/reply/{replyId}")
+	public ResponseDto<Integer> replyDelete(@PathVariable int replyId) {
+		System.out.println("replyDelete.. replyId : "+replyId);
+		boardService.replyDelete(replyId);
+		return new ResponseDto<Integer>(HttpStatus.OK.value(), 1);
+	}
+	
 	/*
 	// 전통 로그인 방식
 	@PostMapping("/api/login")
