@@ -9,10 +9,12 @@ import org.springframework.security.core.userdetails.UserDetails;
 import com.cos.blog.model.User;
 
 import lombok.Getter;
+import lombok.Setter;
 
 // 스프링 시큐리티가 로그인 요청을 가로채서 로그인을 진행하고 완료가 되면 UserDetails 타입의 오브젝트를
 // 스프링 시큐리티의 고유한 세션 저장소에 저장을 해준다.
 @Getter
+@Setter
 public class PrincipalDetail implements UserDetails {
 	
 	private User user; // 콤포지션(객체를 품고 있는걸 콤포지션이라 한다.)
@@ -53,8 +55,8 @@ public class PrincipalDetail implements UserDetails {
 	@Override
 	public boolean isEnabled() {
 		return true;
-	}
-	
+	}	
+
 	// 계정이 갖고 있는 권한 목록을 리턴한다. (권한이 여러개 있을 수 있어서 for 루프를 돌아야 하는데 우리는 한개만 있으니까)
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {

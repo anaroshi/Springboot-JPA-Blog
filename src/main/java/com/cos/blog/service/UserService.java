@@ -19,6 +19,13 @@ public class UserService {
 	@Autowired
 	private BCryptPasswordEncoder encoder;
 	
+	// 회원찾기
+	@Transactional(readOnly = true)
+	public User findByUsername(String username) {
+		User user = userRepository.findByUsername(username).orElseGet(()->{return new User();});
+		return user;
+	}
+	
 	// 회원가입
 	@Transactional  // import org.springframework.transaction.annotation.Transactional;
 	public void save(User user) {
@@ -43,11 +50,14 @@ public class UserService {
 		// select를 해서 User 오브젝트를 DB로 가져오는 이유는 영속화를 하기 위해서!!
 		// 영속화된 오브젝트를 변경하면 자동으로 더티체킹이 일어나면서 DB에 update문을 날려준다. db flush 따로 저장명령어를 넣어줄 필요가 없다. 
 		// 람다식
-		User user = userRepository.findById(requestUser.getId()).orElseThrow(()->{ return new IllegalArgumentException("해당 사용자는 없습니다. id : "+requestUser.getId()); });
-		String rawPassword = requestUser.getPassword();
-		user.setPassword(encoder.encode(rawPassword)); // 해쉬코드로 암호화한다.
-		user.setEmail(requestUser.getEmail());
+		User persistance = userRepository.findById(requestUser.getId()).orElseThrow(()->{ return new IllegalArgumentException("해당 사용자는 없습니다. id : "+requestUser.getId()); });
 		
+		// Validate 체크 => oauth에 값이 없으면 수정 가능 
+		if (persistance.getOauth()==null || persistance.getOauth().equals("")) {
+			String rawPassword = requestUser.getPassword();
+			persistance.setPassword(encoder.encode(rawPassword)); // 해쉬코드로 암호화한다.
+			persistance.setEmail(requestUser.getEmail());
+		}
 		// 회원 수정 함수 종료시 = 서비스 종료 = 트랜잭션 종료 = commit이 자동으로 된다.
 		// 영속화된 user 객체의 변화가 감지되면 더티체킹이 되어 update문을 날려준다.
 	}

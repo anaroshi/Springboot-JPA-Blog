@@ -16,7 +16,6 @@ spring:
 # 파일 리턴 기본 경로 : src/main/resources/static => 정적인 파일들을 모아두는곳(html, png,jpg…)
 # src/main/webapp/WEB-INF/views => 동적인 파일들을 모아두는 곳(jsp) ---- src/main 밑에 webapp/WEB-INF/views 폴더를 생성
 
-
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/blog?serverTimezone=Asia/Seoul
@@ -37,3 +36,7 @@ spring:
   jackson:
     serialization:
       fail-on-empty-beans: false
+
+# OAuth 카카오로 통해서 들어오는 user 비밀번호 지정
+cos:
+  key: cos1234

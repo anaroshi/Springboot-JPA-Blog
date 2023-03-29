@@ -24,6 +24,7 @@ public class PrincipalDetailService implements UserDetailsService {
 		User principal = userRepository.findByUsername(username).orElseThrow(()->{
 			return new UsernameNotFoundException("해당 사용자는 찾을 수 없습니다. username : "+username);
 		});
+		System.out.println(".... principal  : "+principal);
 		return new PrincipalDetail(principal); // 시큐리티의 세션에 유저 정보가 저장이 됨
 	}
 

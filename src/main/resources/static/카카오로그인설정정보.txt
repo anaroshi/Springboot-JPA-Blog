@@ -1,0 +1,55 @@
+1. 카카오 REST API 키(클라이언트키)	: b353b3e01d0a3b17503c48af3fb63cf0
+2. Web 사이트 도메인 : http://localhost:8070
+3. 카카오 로그인 on (활성화)
+4. Redirect URI : http://localhost:8070/auth/kakao/callback (카카오 로그인요청 콜백 주소)
+5. Logout Redirect URI : http://localhost:8070/auth/kakao/logout (카카오 로그아웃요청 콜백 주소)
+
+6. User 오브젝트 : id(번호), username, password, email
+7. 카카오로 부터 받을 정보 : profile정보(필수), email(선택)
+
+8. 로그인 요청 주소 (GET) :
+ 기본 정보 -------------------
+GET /oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code HTTP/1.1
+Host: kauth.kakao.com
+--------------------------
+https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code
+--------------------------
+https://kauth.kakao.com/oauth/authorize?client_id=b353b3e01d0a3b17503c48af3fb63cf0&redirect_uri=http://localhost:8070/auth/kakao/callback&response_type=code
+
+9. 응답 받은 코드 : 
+http://localhost:8070/auth/kakao/callback?code=5xWMaqzkWYhtQhxFii3GkaH7Qh1wQUaVqzfEJjyPYSA87DaWnQB9P2TLegrRY-6ZfcVafgo9c-sAAAGHIJPgNw
+
+10. 토근 발급 요청 주소 (POST) - http body에 데이터 전달(5가지 데이터)
+토큰 받기 기본 정보  -------------------
+POST /oauth/token HTTP/1.1
+Host: kauth.kakao.com
+Content-type: application/x-www-form-urlencoded;charset=utf-8
+
+Request
+Parameter (5가지)
+grant_type		String	authorization_code로 고정	O
+client_id	String	앱 REST API 키 [내 애플리케이션] > [앱 키]에서 확인 가능	O
+redirect_uri		String	인가 코드가 리다이렉트된 URI	O
+code	String		인가 코드 받기 요청으로 얻은 인가 코드	O
+client_secret	String	토큰 발급 시, 보안을 강화하기 위해 추가 확인하는 코드
+							[내 애플리케이션] > [보안]에서 설정 가능
+							ON 상태인 경우 필수 설정해야 함
+ -------------------
+https://kauth.kakao.com/oauth/token
+grant_type = authorization_code
+client_id = b353b3e01d0a3b17503c48af3fb63cf0
+redirect_uri = http://localhost:8070/auth/kakao/callback
+code = code=5xWMaqzkWYhtQhxFii3GkaH7Qh1wQUaVqzfEJjyPYSA87DaWnQB9P2TLegrRY-6ZfcVafgo9c-sAAAGHIJPgNw(동적임)
+
+11. 토큰을 통한 사용자 정보 조회 (POST)
+사용자 정보 가져오기 기본 정보  -------------------
+GET/POST /v2/user/me HTTP/1.1
+Host: kapi.kakao.com
+Authorization: Bearer ${ACCESS_TOKEN}/KakaoAK ${APP_ADMIN_KEY}
+Content-type: application/x-www-form-urlencoded;charset=utf-8
+ -------------------
+ 
+요청 주소 : https://kapi.kakao.com/v2/user/me
+헤더값 : 
+Authorization: Bearer ${ACCESS_TOKEN}
+Content-type: application/x-www-form-urlencoded;charset=utf-8
